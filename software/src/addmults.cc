@@ -363,5 +363,4 @@ int p2,int q2,long long n2,Tpqlist *pqlist){
 	delete alist;
 	delete ablist;
 }
-
 #endif

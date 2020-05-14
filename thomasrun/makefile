@@ -18,6 +18,9 @@ exact : exact.cc su3libs
 
 findmults_list : findmults_list.cc su3libs
 	${CC} -o findmults_list findmults_list.cc -I  ../software/include -L  ../software/lib -I${EIGEN_INCLUDE_PATH} -I/usr/local/include -L/usr/local/lib -lsu3
-	
-su3libs :
+
+test_rand_traj : test_rand_traj.su3libs
+	${CC} -o test_rand_traj test_rand_traj.cc -I  ../software/include -L  ../software/lib -I${EIGEN_INCLUDE_PATH} -I/usr/local/include -L/local/lib -lsu3
+
+su3libs : 
 	make -C  ../software install

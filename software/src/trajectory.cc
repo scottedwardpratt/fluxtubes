@@ -48,7 +48,7 @@ void Ctraj::FindTrajectory(int A,vector<vector<vector<double>>> pqcount,CRandy* 
 		wsum=0.0;
 		ipq=0;
 		do{
-			pprime=pq->p; qprime=pq->q;
+  			pprime=pq->p; qprime=pq->q;
 			wsum+=w[ipq]/wtot;
 			if(wsum>1.000001){
 				printf("wsum=%g\n",wsum);
