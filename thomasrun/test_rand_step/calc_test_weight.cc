@@ -29,7 +29,7 @@ main (int argc, char **argv)
   n1 = atoi(argv[4]);
   Amax = atoi(argv[5]);
   CalcPQCount(Amax, pqcount); //object for calculating weights
-  pmax = GetPmax(Amax);
+  pmax = Amax;
 
 
   Tpq *pq;
@@ -48,7 +48,7 @@ main (int argc, char **argv)
     }
   
   char filename[100];
-  sprintf(filename, "weights.txt");
+  sprintf(filename, "calculated_weights/weights_%d_%d_%d_%d_%d_.txt",a,p1,q1,n1,Amax);
 
   FILE *fptr = fopen (filename, "w");
   fprintf (fptr, "p'    q'    w\n"); 

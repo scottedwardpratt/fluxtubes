@@ -1,0 +1,8 @@
+p'    q'    w
+3    4    -nan
+4    2    -nan
+5    3    -nan
+6    1    -nan
+7    2    -nan
+4    5    -nan
+6    4    -nan
