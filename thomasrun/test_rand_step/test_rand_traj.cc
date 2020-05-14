@@ -26,8 +26,8 @@ main ()
   Amax = 9;			//Seting Amax to a relatively low number so that we can generate a lot of trajectories quickly
   pmax = GetPmax (Amax);
 
-  int Ntraj, itraj;
-  Ntraj = 1e8;
+  long Ntraj, itraj;
+  Ntraj = 5e9;
 
   sprintf (filename, "rand_traj/good_random_traj_%d.txt", Amax);	//open a file for our trajectories that come back to zero
 

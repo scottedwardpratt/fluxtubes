@@ -1,8 +1,3 @@
-p'    q'    w
-3    5    -nan
-4    3    -nan
-5    4    -nan
-6    2    -nan
-7    3    -nan
-4    6    -nan
-6    5    -nan
+version https://git-lfs.github.com/spec/v1
+oid sha256:7e8eee113019cfa9df59b73134fc893605b0ae959376d4e28345c8c16fb537bf
+size 119

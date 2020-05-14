@@ -1,5 +1,3 @@
-p'    q'    w
-0    3    0.000000
-1    1    1.000000
-2    2    0.000000
-1    4    0.000000
+version https://git-lfs.github.com/spec/v1
+oid sha256:b61322e6f01dc0a9399c1605cc03b8c452b6c4ff93fdf6bf80bbacbf4130d6b0
+size 90
