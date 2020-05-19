@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from matplotlib.patches import Ellipse
 import os
 import sys
 
@@ -23,24 +24,16 @@ for Amax in Amax_list:
 
 max_dist_array = np.array(max_dist)
 
-plt.figure(figsize = (10,10))
+fig = plt.figure(figsize=(10,10))
 plt.xlabel("p")
 plt.ylabel("q")
-plt.title("Fartherst Point Reached by Returning Random Walks with Different Values of Amax")
 plt.xlim(0,20)
 plt.ylim(0,20)
-
-for a in Amax_list:
-    if a == 5:
-        color = "red"
-    if a ==10:
-        color = "blue"
-    if a ==15:
-        color = "green"
-    if a ==20:
-        color = "black"
-    plt.scatter(max_dist_array[(max_dist_array[:,2]==a),0], max_dist_array[(max_dist_array[:,2]==a),1], color=color,label="Amax="+str(a))
-
-plt.legend()
-plt.show()
+plt.title("Furthest Points Reached by Returning Random Walks with Different Values of Amax")
+for Amax in Amax_list:
+    p = max_dist_array[(max_dist_array[:,2]==Amax),0]
+    q = max_dist_array[(max_dist_array[:,2]==Amax),1]
+    p_width = np.average(p)
+    q_height = np.average(q)
+    matplotlib.patches.Ellipse((0,0), p_width, q_height, angle=45, color=(np.random.random(), np.random.random(),np.random.random()), label="Amax="+str(Amax))
 plt.savefig("plots/contour.png")
