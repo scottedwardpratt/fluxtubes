@@ -28,8 +28,8 @@ fig = plt.figure(0)
 ax = fig.add_subplot(111, aspect='equal')
 ax.set_xlabel("p")
 ax.set_ylabel("q")
-ax.set_xlim(0,4)
-ax.set_ylim(0,4)
+ax.set_xlim(0,3)
+ax.set_ylim(0,3)
 ax.set_title("Furthest Points Reached by Returning Random Walks with Different Values of Amax")
 colors = ["red","green","blue","purple","orange","yellow"]
 handles = []
