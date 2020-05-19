@@ -24,7 +24,7 @@ for Amax in Amax_list:
 
 max_dist_array = np.array(max_dist)
 
-fig = plt.figure(0)
+fig = plt.figure(figsize = (15,15))
 ax = fig.add_subplot(111, aspect='equal')
 ax.set_xlabel("p")
 ax.set_ylabel("q")
