@@ -31,13 +31,15 @@ ax.set_ylabel("q")
 ax.set_xlim(0,20)
 ax.set_ylim(0,20)
 ax.set_title("Furthest Points Reached by Returning Random Walks with Different Values of Amax")
-for Amax in Amax_list:
-    p = max_dist_array[(max_dist_array[:,2]==Amax),0]
-    q = max_dist_array[(max_dist_array[:,2]==Amax),1]
-    p_width = np.average(p)
-    q_height = np.average(q)
-    el = matplotlib.patches.Ellipse((0,0), p_width, q_height, angle=45, color=(np.random.random(),np.random.random(),np.random.random()), label="Amax="+str(Amax))
-    ax.add_artist(el)
+Amax = 20
+p = max_dist_array[(max_dist_array[:,2]==Amax),0]
+q = max_dist_array[(max_dist_array[:,2]==Amax),1]
+p_width = np.average(p)
+q_height = np.average(q)
+print(p_width)
+print(q_height)
+el = matplotlib.patches.Ellipse((0,0), p_width, q_height, angle=45, color=(np.random.random(),np.random.random(),np.random.random()), label="Amax="+str(Amax))
+ax.add_artist(el)
 plt.show()
 ax.legend()
 plt.savefig("plots/contour.png")
