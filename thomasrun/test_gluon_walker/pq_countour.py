@@ -6,7 +6,7 @@ from matplotlib.patches import Ellipse
 import os
 import sys
 
-Amax_list = [5,10,15,20]
+Amax_list = [5,10,15,20,25,30]
 max_dist = []
 for Amax in Amax_list:
     os.system("./gluon_walker "+str(Amax))
@@ -28,18 +28,20 @@ fig = plt.figure(0)
 ax = fig.add_subplot(111, aspect='equal')
 ax.set_xlabel("p")
 ax.set_ylabel("q")
-ax.set_xlim(0,20)
-ax.set_ylim(0,20)
+ax.set_xlim(0,10)
+ax.set_ylim(0,10)
 ax.set_title("Furthest Points Reached by Returning Random Walks with Different Values of Amax")
-Amax = 20
-p = max_dist_array[(max_dist_array[:,2]==Amax),0]
-q = max_dist_array[(max_dist_array[:,2]==Amax),1]
-p_width = np.average(p)
-q_height = np.average(q)
-print(p_width)
-print(q_height)
-el = matplotlib.patches.Ellipse((0,0), p_width, q_height, angle=45, color=(np.random.random(),np.random.random(),np.random.random()), label="Amax="+str(Amax))
-ax.add_artist(el)
+colors = ["red","green","blue","purple","orange","yellow"]
+for i in range(len(Amax_list)):
+    Amax = Amax_list[len(Amax_list)-(i+1)]
+    p = max_dist_array[(max_dist_array[:,2]==Amax),0]
+    q = max_dist_array[(max_dist_array[:,2]==Amax),1]
+    p_width = np.average(p)
+    q_height = np.average(q)
+    print(p_width)
+    print(q_height)
+    el = matplotlib.patches.Ellipse((0,0), p_width, q_height, angle=45, color=colors[i],edgecolor="black",label="Amax="+str(Amax))
+    ax.add_artist(el)
 plt.show()
 ax.legend()
 plt.savefig("plots/contour.png")
