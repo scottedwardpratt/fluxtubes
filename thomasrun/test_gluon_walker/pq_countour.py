@@ -38,8 +38,8 @@ for i in range(len(Amax_list)):
     Amax = Amax_list[len(Amax_list)-(i+1)]
     p = max_dist_array[(max_dist_array[:,2]==Amax),0]
     q = max_dist_array[(max_dist_array[:,2]==Amax),1]
-    p_width = np.average(p)
-    q_height = np.average(q)
+    p_width = np.average(p+q)
+    q_height = np.average(p-q)
     labels.append("Amax="+str(Amax))
     el = matplotlib.patches.Ellipse((0,0), p_width, q_height, angle=45, color=colors[i],edgecolor="black",alpha=0.5)
     handles.append(el)
