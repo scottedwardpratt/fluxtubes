@@ -24,16 +24,20 @@ for Amax in Amax_list:
 
 max_dist_array = np.array(max_dist)
 
-fig = plt.figure(figsize=(10,10))
-plt.xlabel("p")
-plt.ylabel("q")
-plt.xlim(0,20)
-plt.ylim(0,20)
-plt.title("Furthest Points Reached by Returning Random Walks with Different Values of Amax")
+fig = plt.figure(0)
+ax = fig.add_subplot(111, aspect='equal')
+ax.set_xlabel("p")
+ax.set_ylabel("q")
+ax.set_xlim(0,20)
+ax.set_ylim(0,20)
+ax.set_title("Furthest Points Reached by Returning Random Walks with Different Values of Amax")
 for Amax in Amax_list:
     p = max_dist_array[(max_dist_array[:,2]==Amax),0]
     q = max_dist_array[(max_dist_array[:,2]==Amax),1]
     p_width = np.average(p)
     q_height = np.average(q)
-    matplotlib.patches.Ellipse((0,0), p_width, q_height, angle=45, color=(np.random.random(), np.random.random(),np.random.random()), label="Amax="+str(Amax))
+    el = matplotlib.patches.Ellipse((0,0), p_width, q_height, angle=45, color=(np.random.random(),np.random.random(),np.random.random()), label="Amax="+str(Amax))
+    ax.add_artist(el)
+plt.show()
+ax.legend()
 plt.savefig("plots/contour.png")
