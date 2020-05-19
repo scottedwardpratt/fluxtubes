@@ -32,16 +32,18 @@ ax.set_xlim(0,10)
 ax.set_ylim(0,10)
 ax.set_title("Furthest Points Reached by Returning Random Walks with Different Values of Amax")
 colors = ["red","green","blue","purple","orange","yellow"]
+handles = []
+labels = []
 for i in range(len(Amax_list)):
     Amax = Amax_list[len(Amax_list)-(i+1)]
     p = max_dist_array[(max_dist_array[:,2]==Amax),0]
     q = max_dist_array[(max_dist_array[:,2]==Amax),1]
     p_width = np.average(p)
     q_height = np.average(q)
-    print(p_width)
-    print(q_height)
-    el = matplotlib.patches.Ellipse((0,0), p_width, q_height, angle=45, color=colors[i],edgecolor="black",label="Amax="+str(Amax))
+    labels.append("Amax="+str(Amax))
+    el = matplotlib.patches.Ellipse((0,0), p_width, q_height, angle=45, color=colors[i],edgecolor="black",alpha=0.5)
+    handles.append(el)
     ax.add_artist(el)
 plt.show()
-ax.legend()
+ax.legend(handles,labels)
 plt.savefig("plots/contour.png")
