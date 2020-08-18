@@ -8,7 +8,7 @@ int main(){
 	vector<double> eta;
 	CRandy *randy=new CRandy(-time(NULL));
 	vector<vector<vector<double>>> pqcount;
-	double edens,y;
+	double edens,y,eta_temp;
 	double Ebar=0,E2bar=0,E3bar=0,E4bar=0,kappa2,kappa3,kappa4,Ssigma_avg=0,Ksigma2_avg=0,omega_avg=0,Serror,Kerror,werror;
 	vector<double> Ssigma,Ksigma2,omega;
 	//printf("Enter Amax: ");
@@ -57,7 +57,7 @@ int main(){
 				//traj.PrintCasimirs();
 				edens=0;
 				for(a=0;a<=Amax;a++){
-					edens+=.5*sqrt(traj.casimir[a])*(erf((eta[a+1]-y)/(sqrt(2)*WG))-erf((eta[a]-y)/(sqrt(2)*WG)));
+					edens+=.5*traj.casimir[a]*(erf((eta[a+1]-y)/(sqrt(2)*WG))-erf((eta[a]-y)/(sqrt(2)*WG)));
 				}
 				Ebar+=edens; E2bar+=edens*edens; E3bar+=pow(edens,3); E4bar+=pow(edens,4);
 			}
