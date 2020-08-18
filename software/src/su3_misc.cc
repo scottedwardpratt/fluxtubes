@@ -155,7 +155,7 @@ void NS_SU3::WriteOpenTrajectories(int A,long long int ntraj,CRandy *randy){
 void NS_SU3::CalcPQCount(int Amax,vector<vector<vector<double>>> &pqcount){
   int A,pmax,p,q;
   int nquarks=0,nanti=0,ngluons,casimir;
-	double dtot,Mtot,nsinglets;
+	double dtot,Mtot,nsinglets=0;
 	double dtrue;
   Tpq *pq;
   Tpqlist **pqlist;
@@ -208,6 +208,17 @@ void NS_SU3::CalcPQCount(int Amax,vector<vector<vector<double>>> &pqcount){
 	}
 	for(A=0;A<=Amax;A++){
 		pqlist[A]->clear();
+	}
+}
+
+void NS_SU3::ClearPQCount(int Amax,vector<vector<vector<double>>> &pqcount){
+	int pmax=GetPmax(Amax);
+	for(int A=0;A<=Amax;A++){
+		for(int p=0;p<=pmax;p++){
+			for(int q=0;q<=pmax;q++){
+				pqcount[A][p][q]=0;
+			}
+		}
 	}
 }
 

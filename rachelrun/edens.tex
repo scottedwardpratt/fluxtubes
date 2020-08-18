@@ -1,0 +1,20 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb}
+
+\DeclareMathOperator\erf{erf}
+
+\begin{document}
+The program takes as input y (the rapidity to calculate energy density fluctuations at), and Ntraj. Then for each of a series of values of the number of gluons Amax, it does the following:
+\begin{enumerate}
+  \item Calculate all possible random walks of length $\leq$ Amax. (CalcPQCount)
+  \item Generate Ntraj*10 trajectories by selecting each step weighted by its degeneracy given that the walk must return to (0,0). (FindTrajectory)
+  \item For each random walk, find the quadratic Casimir at each step and use this to find the energy density:
+  \begin{align*}
+  \epsilon = \frac{dE}{dy} &= \int_{-\infty}^{\infty} d\eta \frac{dE}{d\eta} e^{-(\eta-y)^2/2\sigma^2}  \\ 
+  &= \frac{1}{2} \sum_a \frac{dE}{d\eta}\Bigr\rvert_{\eta=\eta(a)} \left[ \erf\left(\frac{\eta(a+1)-y}{\sqrt{2}\sigma}\right) - \erf\left(\frac{\eta(a)-y}{\sqrt{2}\sigma}\right)\right]
+  \end{align*}
+  \item Average over all trajectories (which are split into 10 samples to estimate error) to find $\langle\epsilon^n\rangle$, and therefore the cumulant ratios $\omega, S\sigma, K\sigma^2$.
+  \item Write the ratios to an output file (moments.dat), which can be used with moments.py to graph the ratios over the values of Amax.
+\end{enumerate}
+\end{document}

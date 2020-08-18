@@ -95,9 +95,10 @@ namespace NS_SU3{
 	void ReadNpq(vector<vector<vector<double>>> &Npq,int Amax,vector<vector<double>> &biggestweight);
 	void WriteOpenTrajectories(int Amax,long long int ntraj,CRandy *randy);
 	void CalcPQCount(int Amax,vector<vector<vector<double>>> &pqcount);
+	void ClearPQCount(int Amax,vector<vector<vector<double>>> &pqcount);
 	int GetPmax(int A);
 	int degen(int p,int q);
-	int Casimir(int p,int q);	
+	int Casimir(int p,int q);
 	double omega_massless(double T,double V);
 	double omegae_massless(double T,double V);
 	double omega_bessel(double mass,double T,double V);
