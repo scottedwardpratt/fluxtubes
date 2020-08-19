@@ -1,23 +1,27 @@
 EIGEN_INCLUDE_PATH = /usr/local/include/eigen3
 CC = clang++ -std=c++11 -O2
 
-traj : traj.cc su3libs
-	${CC} -o traj traj.cc -I  ../software/include -L  ../software/lib -I${EIGEN_INCLUDE_PATH} -L/usr/local/lib -lsu3
+all :
+	make -C ../software
+	make edens
 
-corr : corr.cc su3libs
+edens : edens.cc ../software/lib/libsu3.a
+	${CC} -o edens edens.cc -I  ../software/include -L  ../software/lib -I${EIGEN_INCLUDE_PATH} -I/usr/local/include -L/usr/local/lib -lsu3
+
+traj : traj.cc ../software/lib/libsu3.a
+	${CC} -o traj traj.cc -I  ../software/include -L  ../software/lib -I${EIGEN_INCLUDE_PATH} -I/usr/local/include -L/usr/local/lib -lsu3
+
+corr : corr.cc ../software/lib/libsu3.a
 	${CC} -o corr corr.cc -I  ../software/include -L  ../software/lib -I/usr/local/include -L/usr/local/lib -lsu3
 
-slope_smeared : slope_smeared.cc su3libs
+slope_smeared : slope_smeared.cc ../software/lib/libsu3.a
 	${CC} -o slope_smeared slope_smeared.cc -I  ../software/include -L  ../software/lib -I/usr/local/include -L/usr/local/lib -lsu3
-	
-slope : slope.cc su3libs
+
+slope : slope.cc ../software/lib/libsu3.a
 	${CC} -o slope slope.cc -I  ../software/include -L  ../software/lib -I/usr/local/include -L/usr/local/lib -lsu3
 
-exact : exact.cc su3libs
+exact : exact.cc ../software/lib/libsu3.a
 	${CC} -o exact exact.cc -I  ../software/include -L  ../software/lib -I/usr/local/include -L/usr/local/lib -lsu3
 
-findmults_list : findmults_list.cc su3libs
+findmults_list : findmults_list.cc ../software/lib/libsu3.a
 	${CC} -o findmults_list findmults_list.cc -I  ../software/include -L  ../software/lib -I${EIGEN_INCLUDE_PATH} -I/usr/local/include -L/usr/local/lib -lsu3
-	
-su3libs :
-	make -C  ../software install

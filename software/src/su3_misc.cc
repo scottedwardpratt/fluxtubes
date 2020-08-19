@@ -58,7 +58,7 @@ void NS_SU3::ReadNpq(vector<vector<vector<double>>> &Npq,int Amax,vector<vector<
 						if(p==q)
 							weight*=4.0;
 					}
-					
+
 					if(weight>biggestweight[a1][a2]){
 						biggestweight[a1][a2]=weight;
 						if(a1!=a2)
@@ -72,7 +72,7 @@ void NS_SU3::ReadNpq(vector<vector<vector<double>>> &Npq,int Amax,vector<vector<
 
 void NS_SU3::WriteOpenTrajectories(int A,long long int ntraj,CRandy *randy){
 	long long int itraj;
-	int pmax=GetPmax(A),p,q,a;	
+	int pmax=GetPmax(A),p,q,a;
 	double w;
 	char filename[150];
 
@@ -99,7 +99,7 @@ void NS_SU3::WriteOpenTrajectories(int A,long long int ntraj,CRandy *randy){
 				opentraj[p][q]=fopen(filename,"w");
 		}
 	}
-	
+
 	// NOW LET'S MAKE TRAJECTORIES
 	for(itraj=0;itraj<ntraj;itraj++){
 		ptraj[0]=qtraj[0]=0;
@@ -167,7 +167,7 @@ void NS_SU3::CalcPQCount(int Amax,vector<vector<vector<double>>> &pqcount){
   for(A=0;A<=Amax;A++)
 		pqlist[A]=new Tpqlist(GetPmax(ngluons)+nquarks+nanti);
   pqlist[0]->add(0,0,1);
-	
+
   for(A=1;A<=Amax;A++){
     pqlist[A]->clear();
     for(pq=pqlist[A-1]->first;pq!=NULL;pq=pq->next){
@@ -187,11 +187,12 @@ void NS_SU3::CalcPQCount(int Amax,vector<vector<vector<double>>> &pqcount){
 		for(p=0;p<=pmax;p++){
 			pqcount[A][p].resize(pmax+1,0);
 		}
-	}	
+	}
 	for(A=0;A<=Amax;A++){
 		dtot=Mtot=0.0;
 		for(pq=pqlist[A]->first;pq!=NULL;pq=pq->next){
 			p=pq->p; q=pq->q;
+			//printf("pqcount=%f A=%d p=%d q=%d\n",pqcount[A][p][q],A,p,q);
 			pqcount[A][p][q]+=degen(p,q)*pq->n;
 			if(A==Amax){
 				dtot+=degen(p,q)*pq->n;
@@ -199,7 +200,7 @@ void NS_SU3::CalcPQCount(int Amax,vector<vector<vector<double>>> &pqcount){
 				if(A==Amax && pq->p==0 && pq->q==0)
 					nsinglets+=pq->n;
 			}
-		}	
+		}
 		if(A==Amax){
 			dtrue=pow(double(3),nquarks+nanti)*pow(8.0,ngluons);
 			printf("---- A=%d, dtot=%g =? %g ----\n",A,dtot,dtrue);
@@ -209,6 +210,7 @@ void NS_SU3::CalcPQCount(int Amax,vector<vector<vector<double>>> &pqcount){
 	for(A=0;A<=Amax;A++){
 		pqlist[A]->clear();
 	}
+	delete pqlist;
 }
 
 void NS_SU3::ClearPQCount(int Amax,vector<vector<vector<double>>> &pqcount){

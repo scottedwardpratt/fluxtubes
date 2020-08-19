@@ -5,16 +5,20 @@
 \DeclareMathOperator\erf{erf}
 
 \begin{document}
-The program takes as input y (the rapidity to calculate energy density fluctuations at), and Ntraj. Then for each of a series of values of the number of gluons Amax, it does the following:
+The program takes as input Amax (the number of gluons), and Ntraj. Given Amax, it calculates all possible random walks of length $\leq$ Amax (CalcPQCount). Then for each of a set of values of y, it does the following:
 \begin{enumerate}
-  \item Calculate all possible random walks of length $\leq$ Amax. (CalcPQCount)
-  \item Generate Ntraj*10 trajectories by selecting each step weighted by its degeneracy given that the walk must return to (0,0). (FindTrajectory)
+  \item Generate Ntraj*10 trajectories by selecting each step weighted by its degeneracy given that the walk must return to (0,0) (FindTrajectory). Each trajectory is also associated with a random placement of gluons in rapidity space between -7 and 7.
   \item For each random walk, calculate the quadratic Casimir at each step and use this to find the energy density:
   \begin{align*}
   \epsilon = \frac{dE}{dy} &= \frac{1}{\sqrt{2 \pi} \sigma} \int_{-\infty}^{\infty} d\eta \frac{dE}{d\eta} e^{-(\eta-y)^2/2\sigma^2}  \\ 
-  &= \frac{1}{2} \sum_a \frac{dE}{d\eta}\Bigr\rvert_{\eta=\eta(a)} \left[ \erf\left(\frac{\eta(a+1)-y}{\sqrt{2}\sigma}\right) - \erf\left(\frac{\eta(a)-y}{\sqrt{2}\sigma}\right)\right]
+  &= \frac{1}{2} \sum_a \frac{dE}{d\eta}\Bigr\rvert_{\eta=\eta(a)} \left[ \erf\left(\frac{\eta(a+1)-y}{\sqrt{2}\sigma}\right) - \erf\left(\frac{\eta(a)-y}{\sqrt{2}\sigma}\right)\right].
   \end{align*}
+ We assume that
+ \begin{align*}
+ \frac{dE}{d\eta} \propto C(a),
+ \end{align*}
+ therefore in this program we assume the constant of proportionality is 1. All moments are then off by a scalar multiple.
   \item Average over all trajectories (which are split into 10 samples to estimate error) to find $\langle\epsilon^n\rangle$, and therefore the cumulant ratios $\omega, S\sigma, K\sigma^2$.
-  \item Write the ratios to an output file (moments.dat), which can be used with moments.py to graph the ratios over the values of Amax.
+  \item Write the ratios to an output file (moments.dat), which can be used with moments.py, ratios.py, and altratios.py to graph cumulants and their ratios over y.
 \end{enumerate}
 \end{document}

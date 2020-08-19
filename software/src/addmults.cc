@@ -202,6 +202,7 @@ void NS_SU3::addmults(int p1,int q1,int p2,int q2,Tweightlist *weightlist){
 
 		}
 		alist->clear();
+		delete alist;
 	}
 }
 

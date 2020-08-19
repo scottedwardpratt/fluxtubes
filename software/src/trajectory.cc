@@ -9,7 +9,6 @@ using namespace std;
 void Ctraj::FindTrajectory(int A,vector<vector<vector<double>>> pqcount,CRandy* &randy){
 	Resize(A);
 	int pmax=GetPmax(A);
-	Tpqlist *pqlist=new Tpqlist(pmax+2);
 	Tpqlist *goodlist=new Tpqlist(pmax+2);
 	Tpq *pq;
 	int p,q,pprime,qprime,a,ipq,count;
@@ -19,7 +18,7 @@ void Ctraj::FindTrajectory(int A,vector<vector<vector<double>>> pqcount,CRandy* 
 	for(a=1;a<=A;a++){
 		wtot=0.0;
 		//goodlist=new Tpqlist(pmax+2);
-		goodlist->clear();				
+		goodlist->clear();
 		//for(pprime=ppmin;pprime<=ppmax;pprime++){
 			//for(qprime=qpmin;qprime<=qpmax;qprime++){
 		for(ipq=0;ipq<7;ipq++){
@@ -57,12 +56,13 @@ void Ctraj::FindTrajectory(int A,vector<vector<vector<double>>> pqcount,CRandy* 
 			pq=pq->next;
 			ipq+=1;
 		}while(r>wsum);
-		ptraj[a]=pprime; qtraj[a]=qprime;		
+		ptraj[a]=pprime; qtraj[a]=qprime;
 		p=pprime; q=qprime;
 		goodlist->clear();
 		//delete goodlist;
 
 	}
+	delete goodlist;
 	//Print();
 }
 
@@ -90,7 +90,6 @@ void Ctraj::Print(){
 void Ctraj::Write(FILE *fptr){
 	int a;
 	for(a=0;a<=A;a++){
-		//fprintf(fptr,"%d %d %d ",ptraj[a],qtraj[a],casimir[a]);
 		fprintf(fptr,"%d ",casimir[a]);
 	}
 	fprintf(fptr,"\n");
@@ -98,4 +97,3 @@ void Ctraj::Write(FILE *fptr){
 
 
 #endif
-
