@@ -117,6 +117,26 @@ void Tpqlist::clear(){
 	}
 }
 
+void Tpqlist::remove(){
+	Tpq *next;
+	next=first;
+	while(first!=NULL){
+		next=first->next;
+		delete first;
+		first=next;
+	}
+	first=NULL;
+	last=NULL;
+	int p,q;
+	for(p=0;p<=pqmax;p++){
+		for(q=0;q<=pqmax;q++){
+			pqptr_array[p][q]=NULL;
+		}
+		delete pqptr_array[p];
+	}
+	delete pqptr_array;
+}
+
 void Tpqlist::cgluon(int ell){
 	clear();
 	if(ell==1) add(1,1,1.0);

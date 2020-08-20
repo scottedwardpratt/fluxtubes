@@ -104,5 +104,6 @@ int main(){
 					y,kappa1_avg,k1error,kappa2_avg,k2error,kappa3_avg,k3error,kappa4_avg,k4error,
 					omega_avg,werror,Ssigma_avg,Serror,Ksigma2_avg,Kerror,c3c1_avg,c3c1error,c4c3_avg,c4c3error);
 	}
+	delete randy;
 	return 0;
 }
