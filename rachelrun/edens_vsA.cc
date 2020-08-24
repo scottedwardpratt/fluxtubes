@@ -14,19 +14,19 @@ int main(){
 	vector<double> kappa1,kappa2,kappa3,kappa4,Ssigma,Ksigma2,omega,c3c1,c4c3;
 	printf("Enter Ntraj: ");
 	scanf("%d",&Ntraj);
-	printf("Enter Amax: ");
-	scanf("%d",&Amax);
-	CalcPQCount(Amax,pqcount);
-	pmax=GetPmax(Amax+2);
-	eta.resize(Amax+2);
-	Ctraj traj(Amax+1);
+	printf("Enter y: ");
+	scanf("%lf",&y);
 	multimap<double,int> etamap;
 	multimap<double,int> amap;
 	multimap<double,int>::iterator iter;
-	string filename="moments.dat";
+	string filename="moments_vsA.dat";
 	FILE *fptr=fopen(filename.c_str(),"w");
 	fprintf(fptr,"y\tkappa1\tk1error\tkappa2\tk2error\tkappa3\tk3error\tkappa4\tk4error\tSsigma_avg\tSerror\tKsigma2_avg\tKerror\tomega_avg\twerror\n");
-	for(y=-6.5;y<=6.5;y+=1){
+	for(Amax=10;Amax<=100;Amax+=10){
+		CalcPQCount(Amax,pqcount);
+		pmax=GetPmax(Amax+2);
+		eta.resize(Amax+2);
+		Ctraj traj(Amax+1);
 		Ssigma.clear(); Ksigma2.clear(); omega.clear();
 		kappa1.clear(); kappa2.clear(); kappa3.clear(); kappa4.clear();
 		c3c1.clear(); c4c3.clear();
@@ -39,7 +39,7 @@ int main(){
 		printf("------------------------------------------------------\n");
 		for(int isample=0;isample<Nsample;isample++){
 			Ebar=E2bar=E3bar=E4bar=0;
-			printf("y=%lf, beginning sample %d\n",y,isample);
+			printf("Amax=%d, beginning sample %d\n",Amax,isample);
 			for(int itraj=0;itraj<Ntraj;itraj++){
 				etamap.clear();
 				etamap.insert(pair<double,int>(-YB,0));
@@ -100,11 +100,11 @@ int main(){
 		Serror=sqrt(Serror)/double(Nsample); Kerror=sqrt(Kerror)/double(Nsample); werror=sqrt(werror)/double(Nsample);
 		k1error=sqrt(k1error)/double(Nsample); k2error=sqrt(k2error)/double(Nsample); k3error=sqrt(k3error)/double(Nsample); k4error=sqrt(k4error)/double(Nsample);
 		c3c1error=sqrt(c3c1error)/double(Nsample); c4c3error=sqrt(c4c3error)/double(Nsample);
-		fprintf(fptr,"%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\n",
-					y,kappa1_avg,k1error,kappa2_avg,k2error,kappa3_avg,k3error,kappa4_avg,k4error,
+		fprintf(fptr,"%d\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\n",
+					Amax,kappa1_avg,k1error,kappa2_avg,k2error,kappa3_avg,k3error,kappa4_avg,k4error,
 					omega_avg,werror,Ssigma_avg,Serror,Ksigma2_avg,Kerror,c3c1_avg,c3c1error,c4c3_avg,c4c3error);
+		ClearPQCount(Amax,pqcount);
 	}
 	delete randy;
-	ClearPQCount(Amax,pqcount);
 	return 0;
 }
