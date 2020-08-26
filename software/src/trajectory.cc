@@ -62,6 +62,7 @@ void Ctraj::FindTrajectory(int A,vector<vector<vector<double>>> pqcount,CRandy* 
 		//delete goodlist;
 
 	}
+	goodlist->remove();
 	delete goodlist;
 	//Print();
 }

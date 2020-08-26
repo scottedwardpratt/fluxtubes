@@ -208,8 +208,10 @@ void NS_SU3::CalcPQCount(int Amax,vector<vector<vector<double>>> &pqcount){
 		}
 	}
 	for(A=0;A<=Amax;A++){
-		pqlist[A]->clear();
+		pqlist[A]->remove();
+		delete pqlist[A];
 	}
+	delete randy;
 	delete pqlist;
 }
 

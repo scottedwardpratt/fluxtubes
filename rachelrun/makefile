@@ -4,9 +4,13 @@ CC = clang++ -std=c++11 -O2
 all :
 	make -C ../software
 	make edens
+	make edens_vsA
 
 edens : edens.cc ../software/lib/libsu3.a
 	${CC} -o edens edens.cc -I  ../software/include -L  ../software/lib -I${EIGEN_INCLUDE_PATH} -I/usr/local/include -L/usr/local/lib -lsu3
+
+edens_vsA : edens_vsA.cc ../software/lib/libsu3.a
+	${CC} -o edens_vsA edens_vsA.cc -I  ../software/include -L  ../software/lib -I${EIGEN_INCLUDE_PATH} -I/usr/local/include -L/usr/local/lib -lsu3
 
 traj : traj.cc ../software/lib/libsu3.a
 	${CC} -o traj traj.cc -I  ../software/include -L  ../software/lib -I${EIGEN_INCLUDE_PATH} -I/usr/local/include -L/usr/local/lib -lsu3

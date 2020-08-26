@@ -30,6 +30,7 @@ public:
 	Tpqlist(int Amax);
 	void add(int p,int q,double n);
 	void clear();
+	void remove();
 	void cgluon(int ell);
 	void cquark(int ell);
 	void compress();
