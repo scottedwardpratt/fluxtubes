@@ -8,7 +8,7 @@ int main(){
 	vector<double> eta;
 	CRandy *randy=new CRandy(-time(NULL));
 	vector<vector<vector<double>>> pqcount;
-	double edens,y,eta_temp;
+	double edens=0,y,eta_temp;
 	double Ebar=0,E2bar=0,E3bar=0,E4bar=0,kappa1_avg=0,kappa2_avg=0,kappa3_avg=0,kappa4_avg=0,Ssigma_avg=0,Ksigma2_avg=0,c3c1_avg=0,c4c3_avg=0;
 	double k1error,k2error,k3error,k4error,omega_avg=0,Serror,Kerror,werror,c3c1error,c4c3error;
 	vector<double> kappa1,kappa2,kappa3,kappa4,Ssigma,Ksigma2,omega,c3c1,c4c3;
@@ -56,11 +56,11 @@ int main(){
 				traj.FindTrajectory(Amax+1,pqcount,randy);
 				traj.CalcCasimirs();
 				//traj.PrintCasimirs();
-				edens=0;
 				for(a=0;a<=Amax;a++){
 					edens+=.5*traj.casimir[a]*(erf((eta[a+1]-y)/(sqrt(2)*WG))-erf((eta[a]-y)/(sqrt(2)*WG)));
 				}
 				Ebar+=edens; E2bar+=edens*edens; E3bar+=pow(edens,3); E4bar+=pow(edens,4);
+				edens=0;
 			}
 			Ebar/=double(Ntraj);
 			E2bar/=double(Ntraj);
@@ -106,5 +106,6 @@ int main(){
 	}
 	delete randy;
 	ClearPQCount(Amax,pqcount);
+	fclose(fptr);
 	return 0;
 }

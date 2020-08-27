@@ -11,9 +11,7 @@
 \date{\today}
 \maketitle
 
-This document is intended to be a summary of what the routine edens.cc in the project fluxtubes does and my thoughts on it.
-
-\section*{Procedure}
+\section*{Summary}
 The program edens.cc takes as input Amax (the number of gluons), and Ntraj. Given Amax, it calculates all possible random walks of length $\leq$ Amax (CalcPQCount). By this I mean that for each gluon added, a step is taken in the 2-D space representing the possible eigenvalues (p,q) in SU(3), and so the "path" in pq-coordinate space can be seen as a random walk. See the "papers" directory of this project for a description of addition in SU(3). In this case the flux tube in its entirety must form a color-singlet, so when producing trajectories we will only select paths that start and end at (0,0). For each of a set of values of y, it does the following:
 \begin{enumerate}
   \item Generate Ntraj*10 trajectories by selecting each step weighted by its degeneracy given that the walk must return to (0,0) (FindTrajectory). Each trajectory is also associated with a random placement of gluons in rapidity space between -7 and 7.
@@ -32,14 +30,29 @@ The program edens.cc takes as input Amax (the number of gluons), and Ntraj. Give
 \end{enumerate}
 The program edens\_vsA.cc is similar, but takes y as an input and lets Amax vary. These results are written to moments\_vsA.dat and can be used with moments\_vsA.py.
 
+In edist.cc, the same procedure for producing trajectories is used, but instead of calculating statistical moments it directly bins trajectories by energy density at mid-rapidity. It takes as input the number of gluons Amax, the number of trajectories Ntraj, and $n$, which as a default should be 0. You can graph this distribution using dist.py. The option is also available in edist.cc to calculate the distribution of average energy density over $n$ flux tubes, which you can use to see that the distribution becomes Gaussian as predicted by the Central Limit Theorem.
+
 \section*{Some Thoughts}
-Based on results shown in the figs directory, it appears that the cumulants of energy density fluctuations (or at least for N=1,2) follow the relation
+Based on results shown in the figs directory, it appears that the cumulants of energy density fluctuations (or at least for $N=1,2$) follow the relation
 \begin{align*}
 C_N = k_N A^N (y^2 - y_0^2)^N
 \end{align*}
-where $k_N$ are constants and $y_0$ is the maximum/minimum value of rapidity in the flux tube, in this case $\pm 7$. Note that in a Poisson or Gaussian distribution, $C_2 \propto C_1$, whereas here $C_2 \propto C_1^2$. 
+where $k_N$ are constants and $y_0$ is the maximum/minimum value of rapidity in the flux tube, in this case $\pm 7$. Certainly $C_N \propto A^N$, though the relation to $y$ is a little trickier for higher-order ($N=3,4$) cumulants due to larger error as $N$ increases and me being too lazy to run at significantly higher Ntraj. Note that in a Poisson or Gaussian distribution, $C_2 \propto C_1$, whereas here $C_2 \propto C_1^2$. 
 
-The Central Limit Theorem states that the distribution of sufficently large samples of any other distribution will be normal. In heavy ion collisions, this means that for sufficiently high numbers of flux tubes within an event, the measured energy density fluctuations will appear to be normal, despite the distribution itself not being normal. This could be incorporated into the code by incrementing Ebar, E2bar, etc not by edens for every trajectory, but by a sum of edens over every $n$ trajectories. 
+It also seems that the energy density distribution itself is given by
+\begin{align*}
+P(\epsilon)=\frac{1}{24r^5} \epsilon^4 e^{-\epsilon/r}.
+\end{align*}
+Assuming this distribution we find that
+\begin{align*}
+r=\frac{C_1}{5}=\frac{C_2}{C_1}.
+\end{align*}
+This distribution also satisfies the observation from the cumulant ratio figures that $C_N \propto C_1^N$:
+\begin{align*}
+C_2 &= 5 r^2=\frac{C_1^2}{5} \\
+C_3 &= 10 r^3=\frac{2}{25}C_1^3 \\
+C_4 &= 30 r^4=\frac{6}{125}C_1^4.
+\end{align*}
 
 Additional fluctuation will also be introduced from fluctuations in flux tube length (by length, here I'm referring to the number of gluons). This could be incorporated by generating the number of gluons for each trajectory according to a Gaussian centered at some average $\overline{A}$. The trick to this is that you'd need to calculate PQCount for the maximum value of $A$, and the larger this value is, the slower the code is going to run while generating all trajectories. Alternately, you could calculate PQCount individually for each trajectory, but this could potentially slow calculation just as much, I'm not sure. Just make sure you call ClearPQCount each time you generate a new one to avoid costly memory leaks.
 \end{document}

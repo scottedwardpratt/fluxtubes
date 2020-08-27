@@ -5,12 +5,16 @@ all :
 	make -C ../software
 	make edens
 	make edens_vsA
+	make edist
 
 edens : edens.cc ../software/lib/libsu3.a
 	${CC} -o edens edens.cc -I  ../software/include -L  ../software/lib -I${EIGEN_INCLUDE_PATH} -I/usr/local/include -L/usr/local/lib -lsu3
 
 edens_vsA : edens_vsA.cc ../software/lib/libsu3.a
 	${CC} -o edens_vsA edens_vsA.cc -I  ../software/include -L  ../software/lib -I${EIGEN_INCLUDE_PATH} -I/usr/local/include -L/usr/local/lib -lsu3
+
+edist : edist.cc ../software/lib/libsu3.a
+	${CC} -o edist edist.cc -I  ../software/include -L  ../software/lib -I${EIGEN_INCLUDE_PATH} -I/usr/local/include -L/usr/local/lib -lsu3
 
 traj : traj.cc ../software/lib/libsu3.a
 	${CC} -o traj traj.cc -I  ../software/include -L  ../software/lib -I${EIGEN_INCLUDE_PATH} -I/usr/local/include -L/usr/local/lib -lsu3
