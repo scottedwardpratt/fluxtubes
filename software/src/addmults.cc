@@ -269,7 +269,7 @@ void NS_SU3::addantiquark_list(int p,int q,int n0,Tpqlist *pqlist){
 	int dp[3]={0,1,-1},dq[3]={1,-1,0};
 	int pprime,qprime,ipq,count,ncheck=0;
 	if(p==0 && q==0){
-		pqlist->add(1,0,n0);
+		pqlist->add(0,1,n0);
 		ncheck=3;
 	}
 	else{
