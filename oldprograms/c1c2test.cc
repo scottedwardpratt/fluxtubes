@@ -26,6 +26,7 @@ int main(){
 	
 
 	double a=1.0,b=0.0,c=-9.0*C1-9.0,d=18.0*C2;
+	printf("c=%g, d=%g\n",c,d);
 	
 	complex<double> z1,z2,z3;
 	double y1,y2,y3,x1=-999,x2=-999,x3=-999,rarg;
@@ -58,5 +59,15 @@ int main(){
 		printf("y3=(%g,%g), x3=%g\n",y3,imag(z3),x3);
 		printf("------- TEST3:  p=%g, q=%g\n",0.5*(x3+y3),0.5*(x3-y3));
 	}
+	
+	double t,arg1,arg2;
+	for(int k=0;k<3;k++){
+		arg1=(1.5*d/c)*sqrt(-3.0/c);
+		arg2=acos(arg1)/3.0-k*2.0*PI/3.0;
+		t=2.0*sqrt(-c/3.0)*cos(arg2);
+		if(fabs(t-y)<.0001)
+			printf("t_%d=%g, test=%g\n",k,t,t*t*t+c*t+d);
+	}
+	
 	
 }
