@@ -3,36 +3,43 @@ using namespace NS_SU3;
 using namespace std;
 
 int main(){
-	int Amax,p,q,a1,a2,pmax;
+	int Amax,a1,p0=0,q0=0,pf=0,qf=0,Ntraj,itraj;
 	char filename[150];
-	double CZbar,Cbar,w;
 	CRandy *randy=new CRandy(-time(NULL));
 	vector<vector<vector<double>>> pqcount;
+	
   printf("Enter Amax: ");
   scanf("%d",&Amax);
-	pmax=GetPmax(Amax);
-	CalcPQCount(Amax,pqcount);
-	
-	Ctraj traj(Amax);
-	int Ntraj,itraj,a;
-	vector<double> C(Amax+1);
+	printf("Enter p0 and q0: ");
+	scanf("%d %d",&p0,&q0);
+	printf("Enter pf and qf: ");
+	scanf("%d %d",&pf,&qf);
 	printf("Enter Ntraj: ");
 	scanf("%d",&Ntraj);
-	sprintf(filename,"trajectories/A%d.dat",Amax);
+	snprintf(filename,100,"trajectories/A%d.dat",Amax);
 	FILE *fptr=fopen(filename,"w");
-	for(int itraj=0;itraj<Ntraj;itraj++){
-		traj.FindTrajectory(Amax,pqcount,randy);
+	Ctraj traj(Amax);
+	vector<double> Cquad(Amax+1),Ccubic(Amax+1);
+	for(a1=0;a1<=Amax;a1++){
+		Cquad[a1]=Ccubic[a1]=0.0;
+	}
+	
+	
+	CalcPQCount(pf,qf,Amax,pqcount);
+	for(itraj=0;itraj<Ntraj;itraj++){
+		traj.FindTrajectory(p0,q0,Amax,pqcount,randy);
 		traj.CalcCasimirs();
 		traj.Write(fptr);
 		for(a1=0;a1<=Amax;a1++){
-			C[a1]+=traj.casimir[a1];
+			Cquad[a1]+=traj.Cquad[a1];
+			Ccubic[a1]+=traj.Ccubic[a1];
 		}
-		traj.Print();
+		//traj.Print();
 	}
 	fclose(fptr);
 	for(a1=0;a1<=Amax;a1++){
-		printf("Cbar[%d]=%g\n",a1,C[a1]/double(Ntraj));
+		printf("Cquad[%d]=%g, Ccubic[%d]=%g\n",a1,Cquad[a1]/double(Ntraj),a1,Ccubic[a1]/double(Ntraj));
 	}
-	
+
 	return 0;
 }

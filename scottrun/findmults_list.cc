@@ -18,7 +18,7 @@ int main (){
 	pqlist[0]->add (0, 0, 1);
 
 	for (A = 1; A <= Amax; A++){
-		pqlist[A]->clear ();
+		pqlist[A]->clear();
 		for (pq = pqlist[A - 1]->first; pq != NULL; pq = pq->next){
 			/*
 			if(A<=ngluons)

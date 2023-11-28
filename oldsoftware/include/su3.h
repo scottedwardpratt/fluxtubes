@@ -78,14 +78,8 @@ public:
 	}
 	void CalcCasimirs();
 	void PrintCasimirs();
-	void FindOpenTrajectory(int Nquarks0,int Ngluons,int Nquarksf,CRandy* &randy);
 	Ctraj(int Aset){
 		Resize(Aset);
-	}
-	void Clear(){
-		Resize(0);
-		ptraj[0]=0;
-		qtraj[0]=0;
 	}
 	void JoinTrajectories(vector<vector<vector<int>>> &Npq,CRandy* &randy,int A,vector<vector<double>> &biggestweight);
 	void FindTrajectory(int p0,int q0,int A,vector<vector<vector<double>>> pqcount,CRandy* &randy);

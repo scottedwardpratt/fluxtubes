@@ -1,4 +1,4 @@
-#include "su3.h"
+#include "../software/include/su3.h"
 using namespace NS_SU3;
 using namespace std;
 

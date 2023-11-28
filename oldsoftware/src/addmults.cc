@@ -244,6 +244,8 @@ void NS_SU3::addquark_list(int p,int q,int n0,Tpqlist *pqlist){
 			}
 			if(pprime>=0 && qprime>=0){
 				count=1;
+				//if(ipq==2 && pprime!=0 && qprime!=0)
+					//count=2;
 				pqlist->add(pprime,qprime,n0*count);
 				ncheck+=count*degen(pprime,qprime);
 			}

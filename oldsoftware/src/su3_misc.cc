@@ -153,8 +153,11 @@ void NS_SU3::WriteOpenTrajectories(int A,long long int ntraj,CRandy *randy){
 }
 
 void NS_SU3::CalcPQCount(int p0,int q0,int Amax,vector<vector<vector<double>>> &pqcount){
+	printf("check in p0=%d, q0=%d, Amax=%d\n",p0,q0,Amax);
   int A,pmax,p,q;
   int nquarks=0,nanti=0,ngluons;
+	double dtot,Mtot,nsinglets=0;
+	double dtrue;
   Tpq *pq;
   Tpqlist **pqlist;
 	CRandy *randy=new CRandy(-1234);
@@ -187,10 +190,22 @@ void NS_SU3::CalcPQCount(int p0,int q0,int Amax,vector<vector<vector<double>>> &
 		}
 	}
 	for(A=0;A<=Amax;A++){
+		dtot=Mtot=0.0;
 		for(pq=pqlist[A]->first;pq!=NULL;pq=pq->next){
 			p=pq->p; q=pq->q;
 			//printf("pqcount=%f A=%d p=%d q=%d\n",pqcount[A][p][q],A,p,q);
 			pqcount[A][p][q]+=degen(p,q)*pq->n;
+			if(A==Amax){
+				dtot+=degen(p,q)*pq->n;
+				Mtot+=pq->n;
+				if(A==Amax && pq->p==0 && pq->q==0)
+					nsinglets+=pq->n;
+			}
+		}
+		if(A==Amax){
+			dtrue=pow(double(3),nquarks+nanti)*pow(8.0,ngluons);
+			printf("---- A=%d, dtot=%g =? %g ----\n",A,dtot,dtrue);
+			printf("Nsinglets=%g = %g fraction of multiplets and %g fraction of states\n",nsinglets,nsinglets/Mtot,nsinglets/dtot);
 		}
 	}
 	for(A=0;A<=Amax;A++){
@@ -251,10 +266,7 @@ int NS_SU3::GetPmax(int A){
 
 int NS_SU3::degen(int p,int q){
 	int answer;
-	if(p>=0 && q>=0)
-		answer=(p+1)*(q+1)*(p+q+2);
-	else
-		answer=0;
+	answer=(p+1)*(q+1)*(p+q+2);
 	return answer/2;
 }
 
